@@ -6,7 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
-import { ViewList, AssignmentInd, LocalLibrary} from '@material-ui/icons';
+import { ViewList, AssignmentInd, LocalLibrary, ExitToApp } from '@material-ui/icons';
 import { useRouter } from 'next/router';
 const baseUrl = '/giaovu';
 
@@ -17,6 +17,12 @@ function Tab({ selected }: { selected?: string }) {
       <div>
         <Divider />
         <ListSubheader inset>Giáo vụ</ListSubheader>
+        <ListItem button>
+          <ListItemIcon>
+            <ExitToApp />
+          </ListItemIcon>
+          <ListItemText primary="Đăng nhập" />
+        </ListItem>
         <ListItem button>
           <ListItemIcon>
             <ViewList />
