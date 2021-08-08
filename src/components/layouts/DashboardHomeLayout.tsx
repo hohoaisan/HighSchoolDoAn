@@ -1,6 +1,7 @@
 import DashboardBaseLayout from './DashboardBaseLayout';
 import React from 'react';
 import PeopleIcon from '@material-ui/icons/People';
+import ViewList from '@material-ui/icons/ViewList';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,18 +16,13 @@ const Tab: React.FC = () => {
     <>
       <div>
         <Divider />
-        <ListSubheader inset>Actor</ListSubheader>
-        <ListItem
-          button
-          onClick={() => {
-            router.push('/khach');
-          }}
-        >
+        <ListItem button>
           <ListItemIcon>
-            <PeopleIcon />
+            <ViewList />
           </ListItemIcon>
-          <ListItemText primary="Khách vãng lai" />
+          <ListItemText primary="Xem danh sách các lớp" />
         </ListItem>
+        <ListSubheader inset>Actor</ListSubheader>
         <ListItem
           button
           onClick={() => {

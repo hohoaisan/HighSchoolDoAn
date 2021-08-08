@@ -1,20 +1,11 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Drawer,
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Badge,
-  List,
-} from '@material-ui/core';
+import { Drawer, AppBar, Toolbar, Typography, IconButton, Badge, List } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-
 
 const drawerWidth = 300;
 
@@ -32,22 +23,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 8px',
     flexShrink: 0,
     ...theme.mixins.toolbar,
-  },
-  listMenu: {
-    flexGrow: 1,
-    overflowY: 'auto'
-    ,
-    "&::-webkit-scrollbar": {
-      width: '0.5em'
-    }
-     ,
-    "&::-webkit-scrollbar-track" :{
-      boxShadow: 'inset 0 0 6px rgba(0, 0, 0, 0.3)'
-    }
-     ,
-    "&::-webkit-scrollbar-thumb" :{
-      backgroundColor: 'darkgrey'
-    }
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -172,9 +147,7 @@ export default function Dashboard({
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <List className={classes.listMenu}>
-          {tabs}
-        </List>
+        <div>{tabs}</div>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
