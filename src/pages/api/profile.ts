@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { IncomingMessage, ServerResponse } from 'http';
-import withSession from 'libs/session';
+import withSession from 'libs/withSession';
 
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();

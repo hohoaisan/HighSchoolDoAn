@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import withSession from 'libs/session';
+import withSession from 'libs/withSession';
 
 export default withSession(async (req: any, res: NextApiResponse) => {
   req.session.destroy();
