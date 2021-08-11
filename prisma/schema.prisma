@@ -1,0 +1,182 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["microsoftSqlServer"]
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model ChucNang {
+  maChucNang  Int          @id @default(autoincrement())
+  tenChucNang String       @db.NVarChar(20)
+  ChucNangGV  ChucNangGV[]
+  ThongBao    ThongBao[]
+}
+
+model ChucNangGV {
+  maChucNang Int
+  maGiaoVien Int
+  ChucNang   ChucNang @relation(fields: [maChucNang], references: [maChucNang])
+  GiaoVien   GiaoVien @relation(fields: [maGiaoVien], references: [maGiaoVien])
+
+  @@id([maChucNang, maGiaoVien])
+}
+
+model GiaoVien {
+  maGiaoVien      Int             @id @default(autoincrement())
+  tenGiaoVien     String          @db.NVarChar(100)
+  gioiTinh        Boolean
+  diaChiThuongTru String          @db.NVarChar(Max)
+  soDienThoai     String          @db.VarChar(11)
+  matKhau         String?         @db.VarChar(Max)
+  email           String          @unique @db.VarChar(255)
+  anhDaiDien      String?         @db.NVarChar(Max)
+  ChucNangGV      ChucNangGV[]
+  GiaoVienBoMon   GiaoVienBoMon[]
+  LopChuNhiem     LopChuNhiem[]
+  ThongBao        ThongBao[]
+  TinNhan         TinNhan[]
+}
+
+model GiaoVienBoMon {
+  maGVBoMon   Int           @id @default(autoincrement())
+  maMonHoc    Int?
+  maGiaoVien  Int?
+  GiaoVien    GiaoVien?     @relation(fields: [maGiaoVien], references: [maGiaoVien])
+  MonHoc      MonHoc?       @relation(fields: [maMonHoc], references: [maMonHoc])
+  PhanCongDay PhanCongDay[]
+}
+
+model HocBa {
+  maLopChuNhiem Int
+  maHocSinh     Int
+  nhanXetKi1    String?     @db.NVarChar(Max)
+  nhanXetKi2    String?     @db.NVarChar(Max)
+  hanhKiem      String?     @db.NVarChar(50)
+  nangLuc       String?     @db.NVarChar(Max)
+  phamChat      String?     @db.NVarChar(Max)
+  HocSinh       HocSinh     @relation(fields: [maHocSinh], references: [maHocSinh])
+  LopChuNhiem   LopChuNhiem @relation(fields: [maLopChuNhiem], references: [maLopChuNhiem])
+
+  @@id([maLopChuNhiem, maHocSinh])
+}
+
+model HocSinh {
+  maHocSinh       Int               @id @default(autoincrement())
+  tenHocSinh      String            @db.NVarChar(100)
+  gioiTinh        Boolean
+  ngaySinh        DateTime          @db.Date
+  email           String            @unique @db.VarChar(255)
+  queQuan         String            @db.NVarChar(255)
+  soDienThoai     String            @db.VarChar(11)
+  diaChiThuongTru String            @db.NVarChar(Max)
+  matKhau         String?           @db.NVarChar(Max)
+  soThich         String?           @db.NVarChar(Max)
+  anhDaiDien      String?           @db.NVarChar(Max)
+  HocBa           HocBa[]
+  KetQuaHocTap    KetQuaHocTap[]
+  PhuHuynhHocSinh PhuHuynhHocSinh[]
+}
+
+model KetQuaHocTap {
+  maPhanCong  Int
+  maHocSinh   Int
+  diemMieng   Decimal?    @db.Decimal(4, 2)
+  diem15p     Decimal?    @db.Decimal(4, 2)
+  diem45p1    Decimal?    @db.Decimal(4, 2)
+  diem45p2    Decimal?    @db.Decimal(4, 2)
+  diemThi     Decimal?    @db.Decimal(4, 2)
+  nhanXet     String?     @db.NVarChar(Max)
+  HocSinh     HocSinh     @relation(fields: [maHocSinh], references: [maHocSinh])
+  PhanCongDay PhanCongDay @relation(fields: [maPhanCong], references: [maPhanCong])
+
+  @@id([maPhanCong, maHocSinh])
+}
+
+model Lop {
+  maLop       Int           @id @default(autoincrement())
+  tenLop      String        @db.NVarChar(20)
+  khoi        Int?
+  LopChuNhiem LopChuNhiem[]
+}
+
+model LopChuNhiem {
+  maLopChuNhiem Int           @id @default(autoincrement())
+  maNamHoc      Int?
+  maLop         Int?
+  maGiaoVien    Int?
+  soLuong       Int?          @default(0)
+  GiaoVien      GiaoVien?     @relation(fields: [maGiaoVien], references: [maGiaoVien])
+  Lop           Lop?          @relation(fields: [maLop], references: [maLop])
+  NamHoc        NamHoc?       @relation(fields: [maNamHoc], references: [maNamHoc])
+  HocBa         HocBa[]
+  PhanCongDay   PhanCongDay[]
+}
+
+model MonHoc {
+  maMonHoc      Int             @id @default(autoincrement())
+  tenMonHoc     String          @db.NVarChar(50)
+  GiaoVienBoMon GiaoVienBoMon[]
+}
+
+model NamHoc {
+  maNamHoc    Int           @id @default(autoincrement())
+  tenNamHoc   String        @db.NVarChar(50)
+  LopChuNhiem LopChuNhiem[]
+}
+
+model PhanCongDay {
+  maPhanCong    Int            @id @default(autoincrement())
+  maGVBoMon     Int
+  maLopChuNhiem Int
+  hocKy         Int?
+  GiaoVienBoMon GiaoVienBoMon  @relation(fields: [maGVBoMon], references: [maGVBoMon])
+  LopChuNhiem   LopChuNhiem    @relation(fields: [maLopChuNhiem], references: [maLopChuNhiem])
+  KetQuaHocTap  KetQuaHocTap[]
+}
+
+model PhuHuynh {
+  maPhuHuynh      Int               @id @default(autoincrement())
+  tenPhuHuynh     String            @db.NVarChar(100)
+  ngaySinh        DateTime          @db.Date
+  diaChiThuongTru String            @db.NVarChar(Max)
+  soDienThoai     String            @db.VarChar(11)
+  gioiTinh        Boolean
+  email           String            @unique @db.VarChar(255)
+  matKhau         String?           @db.NVarChar(Max)
+  anhDaiDien      String?           @db.NVarChar(Max)
+  PhuHuynhHocSinh PhuHuynhHocSinh[]
+  TinNhan         TinNhan[]
+}
+
+model PhuHuynhHocSinh {
+  maHocSinh  Int
+  maPhuHuynh Int
+  HocSinh    HocSinh  @relation(fields: [maHocSinh], references: [maHocSinh])
+  PhuHuynh   PhuHuynh @relation(fields: [maPhuHuynh], references: [maPhuHuynh])
+
+  @@id([maHocSinh, maPhuHuynh])
+}
+
+model ThongBao {
+  maThongBao Int       @id @default(autoincrement())
+  maChucNang Int?
+  maGiaoVien Int?
+  tieuDe     String    @db.NVarChar(Max)
+  noiDung    String    @db.NVarChar(Max)
+  thoiGian   DateTime  @db.DateTime
+  ChucNang   ChucNang? @relation(fields: [maChucNang], references: [maChucNang])
+  GiaoVien   GiaoVien? @relation(fields: [maGiaoVien], references: [maGiaoVien])
+}
+
+model TinNhan {
+  maTinNhan  Int       @id @default(autoincrement())
+  maGiaoVien Int?
+  maPhuHuynh Int?
+  noiDung    String    @db.NVarChar(Max)
+  thoiGian   DateTime  @db.DateTime
+  GiaoVien   GiaoVien? @relation(fields: [maGiaoVien], references: [maGiaoVien])
+  PhuHuynh   PhuHuynh? @relation(fields: [maPhuHuynh], references: [maPhuHuynh])
+}

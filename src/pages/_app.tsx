@@ -5,6 +5,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from 'themes/default';
 
+import 'react-toastify/dist/ReactToastify.min.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
 
@@ -26,6 +29,17 @@ export default function MyApp(props: AppProps) {
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </React.Fragment>
   );
 }
