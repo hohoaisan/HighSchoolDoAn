@@ -1,5 +1,8 @@
+import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-
+import { toast } from 'react-toastify';
+import useUser from 'hooks/useUser';
+import login from 'api/giaovien/login';
 import {
   Avatar,
   Button,
@@ -45,16 +48,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  return {
-    props: {
-      a: "bruh",
-    },
-  };
-};
-
-export default function SignIn(props : InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function SignIn() {
   const classes = useStyles();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  const { user, loading, error, mutateUser } = useUser({ redirectTo: '/', redirectIfFound: true });
+  const handleEmailChange = useCallback((event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setEmail(event.target.value.trim());
+  }, []);
+  const handlePasswordChange = useCallback((event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setPassword(event.target.value.trim());
+  }, []);
+
+  const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!email || !password) {
+      toast.error('Phải nhập đủ trường dữ liệu');
+      return;
+    }
+    try {
+      await login(email, password);
+      mutateUser();
+    } catch (err) {
+      toast.error('Có lỗi xảy ra khi đăng nhập');
+      console.log(err);
+    }
+  };
+
+  if (loading) {
+    return <div></div>;
+  }
+  if (error) {
+    return (
+      <Grid container component="main" className={classes.root}>
+        <Typography>Có lỗi xảy ra vui lòng tải lại</Typography>
+      </Grid>
+    );
+  }
+
   return (
     <Grid container component="main" className={classes.root}>
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -64,19 +96,21 @@ export default function SignIn(props : InferGetServerSidePropsType<typeof getSer
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Đăng nhập
+            Giáo viên Đăng nhập
           </Typography>
-          <form className={classes.form} noValidate method="post">
+          <form className={classes.form} noValidate method="post" onSubmit={handleSubmitForm}>
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="username"
-              label="Tên đăng nhập"
+              label="Email"
               name="username"
               autoComplete="username"
               autoFocus
+              value={email}
+              onChange={handleEmailChange}
             />
             <TextField
               variant="outlined"
@@ -88,6 +122,8 @@ export default function SignIn(props : InferGetServerSidePropsType<typeof getSer
               type="password"
               id="password"
               autoComplete="password"
+              value={password}
+              onChange={handlePasswordChange}
             />
             <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
               Đăng nhập

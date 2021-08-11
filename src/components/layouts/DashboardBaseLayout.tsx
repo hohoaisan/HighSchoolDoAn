@@ -5,7 +5,8 @@ import { Drawer, AppBar, Toolbar, Typography, IconButton, Badge, List } from '@m
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+
+import Indicator from 'components/Auth/AuthIndicator';
 
 const drawerWidth = 300;
 
@@ -127,11 +128,7 @@ export default function Dashboard({
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             {!!title ? title : 'Trường THPT'}
           </Typography>
-          {/* <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton> */}
+          <Indicator />
         </Toolbar>
       </AppBar>
       <Drawer

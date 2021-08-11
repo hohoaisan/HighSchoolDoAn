@@ -12,12 +12,15 @@ const baseUrl = '/giaovu';
 
 function Tab({ selected }: { selected?: string }) {
   const router = useRouter();
+  const goToSigninPage = () => {
+    router.push('/auth/giaovien/signin');
+  };
   return (
     <>
       <div>
         <Divider />
         <ListSubheader inset>Giáo vụ</ListSubheader>
-        <ListItem button>
+        <ListItem button onClick={goToSigninPage}>
           <ListItemIcon>
             <ExitToApp />
           </ListItemIcon>
