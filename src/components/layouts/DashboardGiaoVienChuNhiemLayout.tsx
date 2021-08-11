@@ -12,15 +12,13 @@ const baseUrl = '/gvcn';
 
 function Tab({ selected }: { selected?: string }) {
   const router = useRouter();
-  const goToSigninPage = () => {
-    router.push('/auth/giaovien/signin');
-  };
+  const goTo = (url: string) => () => router.push(url);
   return (
     <>
       <div>
         <Divider />
         <ListSubheader inset>Giáo viên chủ nhiệm</ListSubheader>
-        <ListItem button onClick={goToSigninPage}>
+        <ListItem button onClick={goTo('/auth/giaovien/signin')}>
           <ListItemIcon>
             <ExitToApp />
           </ListItemIcon>
@@ -38,7 +36,7 @@ function Tab({ selected }: { selected?: string }) {
           </ListItemIcon>
           <ListItemText primary="Xem học bạ học sinh" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={goTo('/gvcn/hocba')}>
           <ListItemIcon>
             <Contacts />
           </ListItemIcon>
