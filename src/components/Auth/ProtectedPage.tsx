@@ -23,7 +23,10 @@ const loginUrl = (type: UserType): string => {
 const ProtectedPage: React.FC<Props> = ({ children, type, roles }) => {
   const { user, loading } = useUser({ redirectTo: loginUrl(type) });
   const classes = useStyles();
-  if (user && user.info?.type !== type && !roles?.every((value: TeacherRole) => !!user.info?.roles?.includes(value))) {
+  if (
+    user &&
+    (user.info?.type !== type || roles?.every((value: TeacherRole) => !!user?.info?.roles?.includes(value)) == false)
+  ) {
     return (
       <Container maxWidth="lg" className={classes.container}>
         <Grid container spacing={3}>
