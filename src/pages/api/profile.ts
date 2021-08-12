@@ -2,8 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { IncomingMessage, ServerResponse } from 'http';
 import withSession from 'libs/withSession';
 
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import prisma from 'db/prisma';
 
 import CookieBody from 'interfaces/CookieBody';
 import UserType from 'enums/UserType';

@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import withSession from 'libs/withSession';
 
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import prisma from 'db/prisma';
 
 import UserType from 'enums/UserType';
 import TeacherRole from 'enums/TeacherRole';
