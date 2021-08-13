@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Typography, Button, IconButton, Grid } from '@material-ui/core';
 import useUser from 'hooks/useUser';
 import logout from 'api/logout';
+import { cache } from 'swr';
 
 function Indicator() {
   const router = useRouter();
@@ -14,6 +15,7 @@ function Indicator() {
   const handleLogout = async () => {
     await logout();
     mutateUser();
+    cache.clear();
   };
   return (
     <div>
