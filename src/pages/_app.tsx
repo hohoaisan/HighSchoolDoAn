@@ -8,6 +8,9 @@ import theme from 'themes/default';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
 
