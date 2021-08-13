@@ -57,9 +57,9 @@ model HocBa {
   hanhKiem      String?     @db.NVarChar(50)
   nangLuc       String?     @db.NVarChar(Max)
   phamChat      String?     @db.NVarChar(Max)
+  lenLop        Boolean     @default(false)
   HocSinh       HocSinh     @relation(fields: [maHocSinh], references: [maHocSinh])
   LopChuNhiem   LopChuNhiem @relation(fields: [maLopChuNhiem], references: [maLopChuNhiem])
-
   @@id([maLopChuNhiem, maHocSinh])
 }
 
