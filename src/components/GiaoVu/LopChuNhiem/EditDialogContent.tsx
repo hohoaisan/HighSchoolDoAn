@@ -166,7 +166,7 @@ const AssignableStudent: React.FC<{ maLopChuNhiem: number }> = ({ maLopChuNhiem 
               </div>
             </div>
           ) : (
-            <Alert severity="info">Lớp này chưa có học sinh nào</Alert>
+            <Alert severity="info">Danh sách trống</Alert>
           )}
         </Grid>
       </Grid>
@@ -322,7 +322,7 @@ const EditDialogContent: React.FC<{ setToggle: () => void; maLopChuNhiem: number
                     </div>
                   </div>
                 ) : (
-                  <Alert severity="info">Danh sách trống</Alert>
+                  <Alert severity="info">Lớp này chưa có học sinh nào</Alert>
                 )}
               </Grid>
             </Grid>
