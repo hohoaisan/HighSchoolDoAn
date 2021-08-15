@@ -21,7 +21,7 @@ function Tab({ selected }: { selected?: string }) {
       <div>
         <Divider />
         <ListSubheader inset>Giáo viên chủ nhiệm</ListSubheader>
-        {!!user || (
+        {user?.isLoggedIn || (
           <ListItem button onClick={goTo('/auth/giaovien/signin')}>
             <ListItemIcon>
               <ExitToApp />
