@@ -10,7 +10,10 @@ import { ViewList, AssignmentInd, LocalLibrary, ExitToApp } from '@material-ui/i
 import { useRouter } from 'next/router';
 const baseUrl = '/giaovu';
 
+import useUser from 'hooks/useUser';
+
 function Tab({ selected }: { selected?: string }) {
+  const { user } = useUser();
   const router = useRouter();
   const goTo = (url: string) => () => router.push(url);
   return (
@@ -18,12 +21,14 @@ function Tab({ selected }: { selected?: string }) {
       <div>
         <Divider />
         <ListSubheader inset>Giáo vụ</ListSubheader>
-        <ListItem button onClick={goTo('/auth/giaovien/signin')}>
-          <ListItemIcon>
-            <ExitToApp />
-          </ListItemIcon>
-          <ListItemText primary="Đăng nhập" />
-        </ListItem>
+        {!!user || (
+          <ListItem button onClick={goTo('/auth/giaovien/signin')}>
+            <ListItemIcon>
+              <ExitToApp />
+            </ListItemIcon>
+            <ListItemText primary="Đăng nhập" />
+          </ListItem>
+        )}
         <ListItem button onClick={goTo('/giaovu/quanlilop')}>
           <ListItemIcon>
             <ViewList />

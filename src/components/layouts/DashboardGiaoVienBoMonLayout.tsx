@@ -10,7 +10,10 @@ import { ViewList, ExitToApp } from '@material-ui/icons';
 import { useRouter } from 'next/router';
 const baseUrl = '/gvbomon';
 
+import useUser from 'hooks/useUser';
+
 function Tab({ selected }: { selected?: string }) {
+  const { user } = useUser();
   const router = useRouter();
   const goTo = (url: string) => () => router.push(url);
   return (
@@ -18,12 +21,14 @@ function Tab({ selected }: { selected?: string }) {
       <div>
         <Divider />
         <ListSubheader inset>Giáo viên bộ môn</ListSubheader>
-        <ListItem button onClick={goTo('/auth/giaovien/signin')}>
-          <ListItemIcon>
-            <ExitToApp />
-          </ListItemIcon>
-          <ListItemText primary="Đăng nhập" />
-        </ListItem>
+        {!!user || (
+          <ListItem button onClick={goTo('/auth/giaovien/signin')}>
+            <ListItemIcon>
+              <ExitToApp />
+            </ListItemIcon>
+            <ListItemText primary="Đăng nhập" />
+          </ListItem>
+        )}
         <ListItem button>
           <ListItemIcon>
             <ViewList />
