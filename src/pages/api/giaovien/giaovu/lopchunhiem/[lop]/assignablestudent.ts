@@ -112,7 +112,6 @@ export default withSession(async function handler(req: any, res: NextApiResponse
               Lop: {
                 khoi: khoi,
               },
-              maNamHoc: currentYear,
             },
           },
         },
